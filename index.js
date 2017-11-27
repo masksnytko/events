@@ -1,4 +1,4 @@
-export default class Events {
+class Events {
     constructor() {
         this._events = new Object;
     }
@@ -37,5 +37,15 @@ export default class Events {
                 _cb.splice(index, 1);
             }
         }
+    }
+}
+
+if (typeof require === 'function') {
+    module.exports = Events;
+} else {
+    try {
+        export default Events;   
+    } catch (err) {
+        window.Events = Events;
     }
 }
