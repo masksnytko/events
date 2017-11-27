@@ -40,12 +40,4 @@ class Events {
     }
 }
 
-if (typeof require === 'function') {
-    module.exports = Events;
-} else {
-    try {
-        export default Events;   
-    } catch (err) {
-        window.Events = Events;
-    }
-}
+module.exports = Events;
