@@ -42,6 +42,7 @@ class Events {
                 return true
             }
         }
+        
         return false
     }
     emit(type) {
