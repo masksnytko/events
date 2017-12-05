@@ -1,6 +1,7 @@
 class Events {
     constructor() {
         this._events = {}
+        this._offset = 0
     }
     on(type, cb) {
         const handler = this._events[type]
@@ -45,18 +46,18 @@ class Events {
         
         return false
     }
-    emit(type) {
-        const handler = this._events[type]
+    emit(type, ...arg) {
+        const handler = this._events[type];
         
         if (handler === undefined) {
             return false
         }
 
         if (typeof handler === 'function') {
-            handler.apply(this, arguments)
+            handler.apply(this, arg)
         } else {
             for (this._offset = 0; this._offset < handler.length; this._offset++) {
-                handler[this._offset].apply(this, arguments)
+                handler[this._offset].apply(this, arg)
             }
         }
 
