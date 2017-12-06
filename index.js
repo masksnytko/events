@@ -1,7 +1,6 @@
 class Events {
     constructor() {
         this._events = {};
-        this._offset = 0;
     }
     on(type, cb) {
         const handler = this._events[type];
@@ -20,7 +19,7 @@ class Events {
             this.removeListener(type, handler);
             this._offset--;
             cb.apply(this, arguments);
-        })
+        });
     }
     removeListener(type, cb) {
         let handler = this._events[type];
