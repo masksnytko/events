@@ -2,6 +2,23 @@ class Events {
     constructor() {
         this._events = {};
     }
+    emit(type, ...arg) {
+        const handler = this._events[type];
+        
+        if (handler === undefined) {
+            return false;
+        }
+
+        if (typeof handler === 'function') {
+            handler.apply(this, arg);
+        } else {
+            for (this._offset = 0; this._offset < handler.length; this._offset++) {
+                handler[this._offset].apply(this, arg);
+            }
+        }
+
+        return true;
+    }
     on(type, cb) {
         const handler = this._events[type];
         if (handler === undefined) {
@@ -45,22 +62,18 @@ class Events {
         
         return false;
     }
-    emit(type, ...arg) {
+    listenerCount(type) {
         const handler = this._events[type];
         
-        if (handler === undefined) {
-            return false;
-        }
-
         if (typeof handler === 'function') {
-            handler.apply(this, arg);
-        } else {
-            for (this._offset = 0; this._offset < handler.length; this._offset++) {
-                handler[this._offset].apply(this, arg);
-            }
+            return 1;
         }
 
-        return true;
+        if (handler === undefined) {
+            return 0;
+        } else {
+            return handler.length;
+        }
     }
 }
 
